@@ -8,27 +8,22 @@ router.get('/', (req, res) => {
   // find all products
   Product.findAll({
     attributes: ['id', 'product_name', 'price', 'stock'],
-    include: {
-      model: Category,
-      attributes: ['category_name']
-    },
-    {
-      model: Tag,
-      attributes: ['tag_name']
-    }
-  });
-  .then (dbUserData => {
-    if (!dbUserData) {
-      res.status(400).json({ message: 'No categories found!' });
-      return;
-    }
-    res.json( dbUserData);
+    include: [
+      {
+        model: Category,
+        attributes: ['category_name']
+      },
+      {
+        model: Tag,
+        attributes: ['tag_name']
+      }
+    ]
   })
-  .catch(err => {
-    console.log(err);
-    res.status(500).json(err);
-  });
-});
+    .then(dbProductData => res.json(dbProductData))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 // get one product
