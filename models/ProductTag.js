@@ -9,8 +9,8 @@ ProductTag.init(
     // define columns
     id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       primaryKey: true,
+      allowNull: false,
       autoIncrement: true
     },
     product_id: {
@@ -22,10 +22,12 @@ ProductTag.init(
     },
     tag_id: {
       type: DataTypes.INTEGER,
-      model: 'tag',
+      references: {
+        model: 'tag',
         key: 'id'
       }
-    },
+    }
+  },
   {
     sequelize,
     timestamps: false,
